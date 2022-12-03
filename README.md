@@ -46,7 +46,7 @@ See `scripts/` for examples.
 
 ### test other measures after generation
 After running the training and evaluation scripts, you should have three folders in `src/OpenNMT-py/` containing relevant information,
-`tf_checkpoints\` for model checkpoints, `preds\` for model predictions and `logs\` for logging information during training.
+`tf_checkpoints/` for model checkpoints, `preds/` for model predictions and `logs/` for logging information during training.
 
 If you want to test on other measures, e.g. F1 or etc. You might want to look at the prediction file and analyze it. For example, in the example `drop_data` folder, we have functions in `generate.py` file for testing F1.
 

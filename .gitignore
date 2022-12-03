@@ -5,7 +5,7 @@ __pycache__/
 tf_checkpoints/
 logs/
 preds/
-
+*_data/
 # C extensions
 *.so
 
