@@ -11,7 +11,7 @@ import torch.nn as nn
 from onmt.encoders.encoder import EncoderBase
 from onmt.decoders.decoder import DecoderBase
 from onmt.models import NMTModel
-from src import onmt
+import onmt
 
 
 class EnsembleDecoderOutput(object):

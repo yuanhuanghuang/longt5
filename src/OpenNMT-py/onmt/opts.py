@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 import configargparse
-from src import onmt
+import onmt
 
 from onmt.models.sru import CheckSRU
 
@@ -576,7 +576,7 @@ def train_opts(parser):
                    "if -average_decay is set.")
     group.add("--src_noise", "-src_noise", type=str, nargs='+',
               default=[],
-              choices=src.onmt.modules.source_noise.MultiNoise.NOISES.keys())
+              choices=onmt.modules.source_noise.MultiNoise.NOISES.keys())
     group.add("--src_noise_prob", "-src_noise_prob", type=float, nargs='+',
               default=[],
               help="Probabilities of src_noise functions")

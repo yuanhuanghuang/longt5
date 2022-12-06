@@ -5,9 +5,12 @@ import onmt.inputters
 import onmt.decoders
 from onmt.trainer import Trainer
 import sys
-
-src.onmt.utils.optimizers.Optim = src.onmt.utils.optimizers.Optimizer
-sys.modules["onmt.Optim"] = src.onmt.utils.optimizers
+import onmt.encoders
+import onmt.models
+import onmt.utils
+import onmt.modules
+onmt.utils.optimizers.Optim = onmt.utils.optimizers.Optimizer
+sys.modules["onmt.Optim"] = onmt.utils.optimizers
 
 # For Flake
 __all__ = [onmt.inputters, onmt.encoders, onmt.decoders, onmt.models,

@@ -1,14 +1,4 @@
 #!/bin/bash -l
-#SBATCH --job-name=drop_normal    # Job name
-#SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
-#SBATCH --mail-user=YOUR-EMAIL-ADDRESS!!!!!!!!!    # Where to send mail
-#SBATCH --ntasks=1                    # Run on a single CPU
-#SBATCH --cpus-per-task=4
-#SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:6000:1
-#SBATCH --mem=30gb                     # Job memory request
-#SBATCH --time=3-0:00:00               # Time limit hrs:min:sec
-#SBATCH --output=../slurm_output/%j.log   # Standard output and error log
 
 export DATA_PATH=../drop_data/                            # OpenNMT-preprocessed data path
 export OPENNMT_PATH=../src/OpenNMT-py/                         # OpenNMT path
@@ -28,7 +18,7 @@ mkdir $SAVE_PATH
 for SEED in 1
 do
     # training
-    python $OPENNMT_PATH/train.py -train_data $DATA_PATH/${SPLIT}_source.txt -train_datat $DATA_PATH/${SPLIT}_target.txt \
+    python -m pdb $OPENNMT_PATH/train.py -train_data $DATA_PATH/${SPLIT}_source.txt -train_datat $DATA_PATH/${SPLIT}_target.txt \
         -valid_data $DATA_PATH/${VSPLIT}_source.txt -valid_datat $DATA_PATH/${VSPLIT}_target.txt \
         -train_steps 30000 -valid_steps 500 -save_checkpoint_steps 500 -early_stopping 3 \
         -batch_size 2 -accum_count 32 -learning_rate 1e-3 \

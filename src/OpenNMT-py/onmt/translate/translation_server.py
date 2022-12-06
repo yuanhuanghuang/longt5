@@ -11,7 +11,7 @@ import re
 import traceback
 import importlib
 import torch
-from src import onmt
+import onmt
 
 from itertools import islice
 from copy import deepcopy

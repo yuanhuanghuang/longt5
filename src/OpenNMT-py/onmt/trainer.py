@@ -14,9 +14,7 @@ import torch
 import traceback
 import math
 import random
-import higher
-import gc
-from src import onmt
+import onmt
 from onmt.utils.logging import logger
 
 

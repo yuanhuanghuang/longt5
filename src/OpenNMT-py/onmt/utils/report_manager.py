@@ -2,8 +2,9 @@
 from __future__ import print_function
 import time
 from datetime import datetime
-
-from src import onmt
+import sys
+sys.path.append('/home/yuanhuang/longt5/src/OpenNMT-py')
+import onmt
 
 from onmt.utils.logging import logger
 

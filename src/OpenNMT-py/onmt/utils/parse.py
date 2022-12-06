@@ -2,8 +2,8 @@ import configargparse as cfargparse
 import os
 
 import torch
-
-from src import onmt as opts
+import onmt
+from onmt import  opts
 from onmt.utils.logging import logger
 
 

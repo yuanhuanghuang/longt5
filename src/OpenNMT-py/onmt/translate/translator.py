@@ -10,7 +10,7 @@ from itertools import count, zip_longest
 import torch
 import math
 
-from src import onmt
+import onmt
 import onmt.inputters as inputters
 import onmt.decoders.ensemble
 from onmt.translate.beam_search import BeamSearch
@@ -26,7 +26,7 @@ BOS_TOKEN=1
 PAD_TOKEN=0
 
 def build_translator(opt, report_score=True, logger=None, out_file=None):
-    model, model_opt = src.onmt.model_builder.load_test_model(opt)
+    model, model_opt = onmt.model_builder.load_test_model(opt)
 
     scorer = onmt.translate.GNMTGlobalScorer.from_opt(opt)
     translator = Translator.from_opt(

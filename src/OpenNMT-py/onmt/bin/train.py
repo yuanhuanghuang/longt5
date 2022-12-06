@@ -4,8 +4,8 @@ import os
 import signal
 import torch
 
-from src import onmt as opts, onmt
-
+import onmt 
+from onmt import opts
 from onmt.utils.misc import set_random_seed
 from onmt.utils.logging import init_logger, logger
 from onmt.train_single import main as single_main

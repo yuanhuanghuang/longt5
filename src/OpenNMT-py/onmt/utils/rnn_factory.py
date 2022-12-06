@@ -2,7 +2,9 @@
  RNN tools
 """
 import torch.nn as nn
-from src import onmt
+import sys
+sys.path.append('/home/yuanhuang/longt5/src/OpenNMT-py')
+import onmt
 
 
 def rnn_factory(rnn_type, **kwargs):

@@ -6,8 +6,9 @@ from __future__ import division
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-from src import onmt
+import sys
+sys.path.append('/home/yuanhuang/longt5/src/OpenNMT-py')
+import onmt
 from onmt.modules.sparse_losses import SparsemaxLoss
 from onmt.modules.sparse_activations import LogSparsemax
 
@@ -15,7 +16,7 @@ POS_TOKEN = 0
 
 
 def build_loss_compute(model, opt, train=True):
-    device = torch.device("cuda" if src.onmt.utils.misc.use_gpu(opt) else "cpu")
+    device = torch.device("cuda" if onmt.utils.misc.use_gpu(opt) else "cpu")
     padding_idx = POS_TOKEN
     criterion = nn.NLLLoss(ignore_index=padding_idx, reduction='sum')
     compute = NMTLossCompute(criterion)

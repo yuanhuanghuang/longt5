@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from onmt.utils.logging import init_logger, logger
 from onmt.utils.misc import split_corpus
 import onmt.inputters as inputters
-from src import onmt as opts
+import onmt as opts
 from onmt.utils.parse import ArgumentParser
 from onmt.inputters.inputter import _build_fields_vocab,\
                                     _load_vocab, \

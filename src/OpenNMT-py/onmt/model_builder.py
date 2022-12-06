@@ -12,7 +12,7 @@ from transformers import T5Model, T5Config, T5Tokenizer, \
 from torch.nn.init import xavier_uniform_
 
 import onmt.inputters as inputters
-from src import onmt
+import onmt
 from onmt.encoders import str2enc
 from onmt.decoders import str2dec
 
