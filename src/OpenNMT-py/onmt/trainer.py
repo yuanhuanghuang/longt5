@@ -164,10 +164,21 @@ class Trainer(object):
     def totensor_batch(self, batch):
         source = [d[0] for d in batch]
         target = [d[1] for d in batch]
+        index_map = []
         inputs = self.model.tokenizer(source, return_tensors="pt", max_length=self.trim_size, truncation=True, padding=True)
         input_ids = (inputs.input_ids)[:, :self.trim_size].to(self.device, non_blocking=True)
         attn_mask = (inputs.attention_mask)[:, :self.trim_size].to(self.device, non_blocking=True)
-
+        eos = '<extra_id_99>'
+        # next step use eos = '<eos>'
+        eos_token = self.model.tokenizer(eos)['input_ids'][0]
+        for i in range(len(input_ids)):
+            this_map = []
+            for ind in range(len(input_ids[i])):
+                if input_ids[i][ind] == eos_token:
+                    this_map.append(ind)
+            this_map = torch.tensor(this_map)
+            index_map.append(this_map)
+        index_map = torch.stack(index_map)
         if hasattr(self.model, "tgt_stoi"):
             target = [sent.split() + ['<sep>'] for sent in target]
             max_length = max([len(sent) for sent in target])
@@ -182,7 +193,7 @@ class Trainer(object):
             dinput_ids = (labels.input_ids)[:, :self.trim_size].to(self.device, non_blocking=True)
             dattn_mask = (labels.attention_mask)[:, :self.trim_size].to(self.device, non_blocking=True)
 
-        return input_ids, attn_mask, dinput_ids, dattn_mask
+        return input_ids, attn_mask, dinput_ids, dattn_mask, index_map
 
     def process_batch(self, data, train=True, shuffle=True):
         batch_ids = None
@@ -273,7 +284,7 @@ class Trainer(object):
             iters = math.ceil(len(valid_data) / self.batch_size)
 
             for i in range(iters):
-                (input_ids, attn_mask, dinput_ids, dattn_mask), _ = self.process_batch(valid_data, train=False, shuffle=False)
+                (input_ids, attn_mask, dinput_ids, dattn_mask, index_map), _ = self.process_batch(valid_data, train=False, shuffle=False)
                 scores = valid_model(input_ids, attn_mask, dinput_ids, dattn_mask)
                 _, batch_stats = self.valid_loss(dinput_ids.transpose(0,1).contiguous()[1:], scores, back=False)
                 stats.update(batch_stats)
@@ -285,9 +296,9 @@ class Trainer(object):
         self.optim.zero_grad()
 
         for k in range(self.accum_count):
-            (input_ids, attn_mask, dinput_ids, dattn_mask), _ = self.process_batch(train_data, train=True)
+            (input_ids, attn_mask, dinput_ids, dattn_mask, index_map), _ = self.process_batch(train_data, train=True)
             report_stats.n_src_words += attn_mask.sum().item()
-            scores = self.model(input_ids, attn_mask, dinput_ids, dattn_mask)
+            scores = self.model(input_ids, attn_mask, dinput_ids, dattn_mask, index_map)
 
             _, batch_stats = self.train_loss(
                 dinput_ids.transpose(0,1).contiguous()[1:],
