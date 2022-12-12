@@ -145,8 +145,9 @@ class LTEncModel(LongT5Model): #longT5 enc multichoice model
         #bottled_output = output.view(-1, output.size(2))
         scores = self.generator(output) #(batch_size,1)
         '''
-        #bottled_output = output.view(-1, output.size(2))
+
         bottled_output = self.classifier(output)
+        bottled_output = output.view(-1, output.size(2))
         scores = self.softmax(bottled_output)
 
 
