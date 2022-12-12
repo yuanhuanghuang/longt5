@@ -64,6 +64,7 @@ def model_opts(parser):
     # Encoder-Decoder Options
     group = parser.add_argument_group('Model- Encoder-Decoder')
     group.add('--single_alt', '-single_alt', action="store_true")
+    group.add('--mode', '-mode', type=str, default=None)
     group.add('--pkl_file', '-pkl_file', type=str, default=None)
     group.add('--fix_enc', '-fix_enc', action="store_true")
     group.add('--load_t5', '-load_t5', action="store_true")
@@ -247,8 +248,7 @@ def preprocess_opts(parser):
               help="Path(s) to the training source data")
     group.add('--train_tgt', '-train_tgt', default="text",
               help="Path(s) to the training target data")
-    group.add('--mode', '-mode', default=None,
-              help="multil choice")
+
     group.add('--train_align', '-train_align', nargs='+', default=[None],
               help="Path(s) to the training src-tgt alignment")
     group.add('--train_ids', '-train_ids', nargs='+', default=[None],
