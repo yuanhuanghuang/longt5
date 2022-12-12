@@ -170,7 +170,7 @@ class Trainer(object):
         attn_mask = (inputs.attention_mask)[:, :self.trim_size].to(self.device, non_blocking=True)
         eos = '<extra_id_99>'
         # next step use eos = '<eos>'
-        eos_token = self.model.tokenizer(eos)[0]
+        eos_token = self.model.tokenizer(eos)['input_ids'][0]
         for i in range(len(input_ids)):
             this_map = []
             for ind in range(len(input_ids[i])):
