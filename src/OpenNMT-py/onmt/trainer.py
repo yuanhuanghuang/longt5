@@ -194,7 +194,7 @@ class Trainer(object):
             label = []
             for str in target:
                 label.append(int(str[-1])) #multicoice
-            dinput_ids = tensor(label)
+            dinput_ids = tensor(label).cuda()
             #dinput_ids = (labels.input_ids)[:, :self.trim_size].to(self.device, non_blocking=True)
             dattn_mask = (labels.attention_mask)[:, :self.trim_size].to(self.device, non_blocking=True)
 
