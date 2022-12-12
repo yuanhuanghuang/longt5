@@ -190,7 +190,9 @@ class Trainer(object):
             dattn_mask = None
         else:
             labels = self.model.tokenizer(target, return_tensors="pt", max_length=self.trim_size, truncation=True, padding=True)
-            dinput_ids = (labels.input_ids)[:, :self.trim_size].to(self.device, non_blocking=True)
+            label = target #multicoice
+            dinput_ids = (label)
+            #dinput_ids = (labels.input_ids)[:, :self.trim_size].to(self.device, non_blocking=True)
             dattn_mask = (labels.attention_mask)[:, :self.trim_size].to(self.device, non_blocking=True)
 
         return input_ids, attn_mask, dinput_ids, dattn_mask, index_map
@@ -299,9 +301,10 @@ class Trainer(object):
             (input_ids, attn_mask, dinput_ids, dattn_mask, index_map), _ = self.process_batch(train_data, train=True)
             report_stats.n_src_words += attn_mask.sum().item()
             scores = self.model(input_ids, attn_mask, dinput_ids, dattn_mask, index_map)
-
+            #dinput_ids = dinput_ids.transpose(0, 1).contiguous()[1]
+            target = dinput_ids.transpose(0, 1).contiguous()[1]
             _, batch_stats = self.train_loss(
-                dinput_ids.transpose(0,1).contiguous()[1:],
+                target,
                 scores,
                 normalization=normalization)
 
