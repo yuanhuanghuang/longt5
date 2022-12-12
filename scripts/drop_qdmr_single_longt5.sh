@@ -2,8 +2,8 @@
 
 export DATA_PATH=../drop_data/                            # OpenNMT-preprocessed data path
 export OPENNMT_PATH=../src/OpenNMT-py/                         # OpenNMT path
-export SPLIT=qdmr_single_train                     # Number of exposure examples (1 or 100)
-export VSPLIT=qdmr_single_dev
+export SPLIT=train                    # Number of exposure examples (1 or 100)
+export VSPLIT=validation
 export SAVE_PATH=${OPENNMT_PATH}/tf_checkpoints # Save path for checkpoints
 export SAVE_NAME=drop_qdmr_single_longt5      # Checkpoint name
 export LOG_PATH=${OPENNMT_PATH}/logs           # Log path
@@ -18,7 +18,7 @@ mkdir $SAVE_PATH
 for SEED in 1
 do
     # training
-    python -m pdb $OPENNMT_PATH/train.py -train_data $DATA_PATH/${SPLIT}_source.txt -train_datat $DATA_PATH/${SPLIT}_target.txt \
+    python -m pdb $OPENNMT_PATH/train.py -mode mc -train_data $DATA_PATH/${SPLIT}_source.txt -train_datat $DATA_PATH/${SPLIT}_target.txt \
         -valid_data $DATA_PATH/${VSPLIT}_source.txt -valid_datat $DATA_PATH/${VSPLIT}_target.txt \
         -train_steps 30000 -valid_steps 500 -save_checkpoint_steps 500 -early_stopping 3 \
         -batch_size 2 -accum_count 32 -learning_rate 1e-3 \
