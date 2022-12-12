@@ -82,14 +82,14 @@ class LTEncModel(LongT5Model): #longT5 enc multichoice model
     def __init__(self, config):
         super().__init__(config)
         self.tokenizer = AutoTokenizer.from_pretrained('google/long-t5-tglobal-base')
-        self.classifier = nn.LogSoftmax(dim=-1)
+        self.classifier = nn.Linear(768, 1)
+        self.softmax = nn.LogSoftmax(dim=-1)
         self.init_weights()
 
 
     def forward(
             self,
             input_ids,
-
             attention_mask,
             decoder_input_ids,
             decoder_attention_mask,
@@ -146,7 +146,10 @@ class LTEncModel(LongT5Model): #longT5 enc multichoice model
         scores = self.generator(output) #(batch_size,1)
         '''
         bottled_output = output.view(-1, output.size(2))
-        scores = self.classifier(bottled_output)
+        bottled_output = self.classifier(bottled_output)
+        scores = self.softmax(bottled_output)
+
+
         return scores
 
 
