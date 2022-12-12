@@ -176,7 +176,7 @@ class Trainer(object):
             for ind in range(len(input_ids[i])):
                 if input_ids[i][ind] == eos_token:
                     this_map.append(ind)
-                this_map = torch.tensor(this_map)
+            this_map = torch.tensor(this_map)
             index_map.append(this_map)
         index_map = torch.stack(index_map)
         if hasattr(self.model, "tgt_stoi"):
