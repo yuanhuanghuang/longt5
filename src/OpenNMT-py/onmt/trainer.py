@@ -16,6 +16,7 @@ import math
 import random
 import onmt
 from onmt.utils.logging import logger
+from torch import tensor
 
 
 def build_trainer(opt, device_id, model, optim, model_saver=None):
@@ -193,7 +194,7 @@ class Trainer(object):
             label = []
             for str in target:
                 label.append(int(str[-1])) #multicoice
-            dinput_ids = (label)
+            dinput_ids = tensor(label)
             #dinput_ids = (labels.input_ids)[:, :self.trim_size].to(self.device, non_blocking=True)
             dattn_mask = (labels.attention_mask)[:, :self.trim_size].to(self.device, non_blocking=True)
 
