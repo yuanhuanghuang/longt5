@@ -18,7 +18,7 @@ mkdir $SAVE_PATH
 for SEED in 1
 do
     # training
-    python -m pdb $OPENNMT_PATH/train.py -train_data $DATA_PATH/${SPLIT}_source.txt -train_datat $DATA_PATH/${SPLIT}_target.txt \
+    python -m pdb $OPENNMT_PATH/train.py -mode mc -train_data $DATA_PATH/${SPLIT}_source.txt -train_datat $DATA_PATH/${SPLIT}_target.txt \
         -valid_data $DATA_PATH/${VSPLIT}_source.txt -valid_datat $DATA_PATH/${VSPLIT}_target.txt \
         -train_steps 30000 -valid_steps 500 -save_checkpoint_steps 500 -early_stopping 3 \
         -batch_size 2 -accum_count 32 -learning_rate 1e-3 \

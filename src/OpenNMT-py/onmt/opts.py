@@ -382,7 +382,9 @@ def train_opts(parser):
     group = parser.add_argument_group('General')
     
     group.add('--two_task', '-two_task', action="store_true")
+    group.add('--mode', '-mode', type=str, default=None )
 
+    group.add('--num_choice', '-num_choice', type=int, default=4)
     group.add('--task_name', '-task_name', type=str, default=None)
     group.add('--train_data', '-train_data', required=True)
     group.add('--train_datat', '-train_datat', required=True)

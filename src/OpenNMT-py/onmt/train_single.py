@@ -45,15 +45,15 @@ def check_save_model_path(opt):
     if not os.path.exists(model_dirname):
         os.makedirs(model_dirname)
 
-
+#put index_map inside dataset
 def load_dataset(task, architect, filename, filename2):
-    source_bos = task + ": " if MODEL_BOS_DICT[architect][0] == "task" else ""
-    target_bos = MODEL_BOS_DICT[architect][1] + " "
+    #source_bos = task + ": " if MODEL_BOS_DICT[architect][0] == "task" else ""
+    #target_bos = MODEL_BOS_DICT[architect][1] + " "
     with open(filename) as f:
         data = f.read().splitlines()
     with open(filename2) as f:
         data2 = f.read().splitlines()
-    return [(source_bos + d[0], target_bos + d[1]) for d in zip(data, data2)]
+    return [(d[0], d[1]) for d in zip(data, data2)]
 
 
 def main(opt, device_id, batch_queue=None, semaphore=None):
