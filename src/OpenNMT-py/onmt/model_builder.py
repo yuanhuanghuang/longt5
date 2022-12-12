@@ -166,6 +166,7 @@ def build_bart_model(model_opt, gpu, checkpoint, evaluate=False):
         if model_opt.mode == 'mc':
             # from onmt.models import LTEncModel as T5Model
             from onmt.models import LTEncModel as T5Model
+
         model_name = 'google/long-t5-tglobal-base'
     else:
         raise NotImplementedError()
@@ -284,6 +285,7 @@ def build_base_model(model_opt, gpu, checkpoint, evaluate=False):
         if model_opt.mode == 'mc':
             # from onmt.models import LTEncModel as T5Model
             from onmt.models import LTEncModel as T5Model
+        from onmt.models import LTEncModel as T5Model
         model_name = 'google/long-t5-tglobal-base'
     else:
         raise NotImplementedError()
