@@ -291,7 +291,7 @@ class Trainer(object):
             for i in range(iters):
                 (input_ids, attn_mask, dinput_ids, dattn_mask, index_map), _ = self.process_batch(valid_data, train=False, shuffle=False)
                 scores = valid_model(input_ids, attn_mask, dinput_ids, dattn_mask, index_map)
-                _, batch_stats = self.valid_loss(dinput_ids.transpose(0,1).contiguous()[1:], scores, back=False)
+                _, batch_stats = self.valid_loss(dinput_ids, scores, back=False)
                 stats.update(batch_stats)
 
         valid_model.train()
