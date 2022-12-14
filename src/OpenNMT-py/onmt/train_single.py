@@ -53,7 +53,10 @@ def load_dataset(task, architect, filename, filename2):
         data = f.read().splitlines()
     with open(filename2) as f:
         data2 = f.read().splitlines()
-    return [(source_bos + d[0], target_bos + d[1]) for d in zip(data, data2)]
+    if task == 'mc':
+        return [(d[0], target_bos + d[1]) for d in zip(data, data2)]
+    else:
+        return [(source_bos + d[0], target_bos + d[1]) for d in zip(data, data2)]
 
 
 def main(opt, device_id, batch_queue=None, semaphore=None):
