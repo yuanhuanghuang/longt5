@@ -306,6 +306,7 @@ class Trainer(object):
                     all['len'] = len(input_ids)
                     all['len'] = len(input_ids)
                     all_stats.append(all)
+            import json
             json.dump(all_stats,
                       open( f"val_stats_acc_{stats.accuracy}.json" % env_name, 'w') ,
                       sort_keys=True, indent=4, separators=(',', ': '))
