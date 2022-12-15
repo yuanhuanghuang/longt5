@@ -142,6 +142,8 @@ class Trainer(object):
         self.batch_size = batch_size
         self.device = torch.device("cuda:%s" % self.gpu_rank)
         self.trim_size = trim_size
+        self.all_val_corr_num = []
+        self.all_val_acc = []
 
         for i in range(len(self.accum_count_l)):
             assert self.accum_count_l[i] > 0
@@ -287,12 +289,28 @@ class Trainer(object):
             stats = onmt.utils.Statistics()
             self.last_test_batch = 0
             iters = math.ceil(len(valid_data) / self.batch_size)
+            cur_acc = 0
+            all_stats = []
+
+
 
             for i in range(iters):
                 (input_ids, attn_mask, dinput_ids, dattn_mask, index_map), _ = self.process_batch(valid_data, train=False, shuffle=False)
                 scores = valid_model(input_ids, attn_mask, dinput_ids, dattn_mask, index_map)
                 _, batch_stats = self.valid_loss(dinput_ids, scores, back=False)
                 stats.update(batch_stats)
+                if len(input_ids) == 1 :
+                    all = {}
+                    self.all_val_corr_num.append(stats.n_correct)
+                    all['id'] = i
+                    all['len'] = len(input_ids)
+                    all['len'] = len(input_ids)
+                    all_stats.append(all)
+            json.dump(all_stats,
+                      open( f"val_stats_acc_{stats.accuracy}.json" % env_name, 'w'),
+                      sort_keys=True, indent=4, separators=(',', ': '))
+
+
 
         valid_model.train()
         return stats
