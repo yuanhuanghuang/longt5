@@ -144,6 +144,7 @@ class Trainer(object):
         self.trim_size = trim_size
         self.all_val_corr_num = []
         self.all_val_acc = []
+        self.val_step = 0
 
         for i in range(len(self.accum_count_l)):
             assert self.accum_count_l[i] > 0
@@ -308,8 +309,9 @@ class Trainer(object):
                     all_stats.append(all)
             import json
             json.dump(all_stats,
-                      open( f"val_stats_acc_%f.json" % float(stats.accuracy) , 'w') ,
+                      open( f"val_stats_step_%d.json" % int(self.val_step) , 'w') ,
                       sort_keys=True, indent=4, separators=(',', ': '))
+            self.val_step += 1
 
 
 
